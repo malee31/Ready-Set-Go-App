@@ -4,7 +4,9 @@
 		"primary": "#0077B6",
 		"light": "#95DFEC",
 		"secondary": "#F09240",
-		"lightgray": "#F0F0F0",
+		"darkgray": "#999999",
+		"gray": "#DDDDDD",
+		"lightgray": "#EEEEEE",
 		"background": "#FFFFFF",
 		"text": "#202020"
 	}
