@@ -3,7 +3,6 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { NavigationContainer } from '@react-navigation/native';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Calendar from "../pages/Calendar";
-import Stopwatch from "../pages/Stopwatch";
 import Add from "../pages/Add";
 import Timer from "../pages/Timer"
 

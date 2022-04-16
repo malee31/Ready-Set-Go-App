@@ -1,11 +1,11 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { Text } from "react-native";
 import Screen from "../components/Screen";
 
-export default function Add({navigation}) {
+export default function Add({ navigation }) {
 	return (
 		<Screen>
-			Add
+			<Text>Add</Text>
 		</Screen>
 	);
 };
