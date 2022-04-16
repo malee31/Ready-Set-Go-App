@@ -1,13 +1,10 @@
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
-import { DefaultTheme, Provider as PaperProvider, Text } from 'react-native-paper';
+import { TabNavigator } from "./src/components/Tabs";
 import { colors } from "./constants.json";
 
 const theme = {
-	...DefaultTheme,
-	dark: false,
-	roundness: 2,
-	colors: {
+	...DefaultTheme, dark: false, roundness: 2, colors: {
 		...DefaultTheme.colors,
 		primary: colors.primary,
 		accent: colors.secondary,
@@ -17,21 +14,8 @@ const theme = {
 };
 
 export default function App() {
-	return (
-		<PaperProvider theme={theme}>
-			<View style={styles.container}>
-				<Text>Open up App.js to start working on your app!</Text>
-				<StatusBar style="auto"/>
-			</View>
-		</PaperProvider>
-	);
+	return (<PaperProvider theme={theme}>
+			<StatusBar style="auto"/>
+			<TabNavigator/>
+		</PaperProvider>);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#FFFFFF',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-});
