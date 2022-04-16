@@ -5,7 +5,6 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import Calendar from "../pages/Calendar";
 import Add from "../pages/Add";
 import Timer from "../pages/Timer"
-import { colors } from "../../constants.json";
 
 const ICON_SIZE = 20;
 
@@ -14,20 +13,7 @@ const Tab = createMaterialBottomTabNavigator();
 export function TabNavigator() {
 	return (
 		<NavigationContainer>
-			<Tab.Navigator
-				initialRouteName="Home"
-				backBehavior="order"
-				shifting={true}
-				inactiveColor={colors.darkgray}
-				activeColor={colors.primary}
-				barStyle={{
-					borderTopWidth: 1,
-					borderTopColor: colors.gray
-				}}
-				screenOptions={{
-					tabBarColor: colors.lightgray
-				}}
-			>
+			<Tab.Navigator>
 				<Tab.Screen
 					name="Calendar"
 					component={Calendar}

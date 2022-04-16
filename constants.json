@@ -4,11 +4,8 @@
 		"primary": "#0077B6",
 		"light": "#95DFEC",
 		"secondary": "#F09240",
-		"darkgray": "#999999",
-		"gray": "#DDDDDD",
-		"lightgray": "#EEEEEE",
+		"lightgray": "#F0F0F0",
 		"background": "#FFFFFF",
-		"text": "#202020",
-		"red": "#FF0000"
+		"text": "#202020"
 	}
 }
