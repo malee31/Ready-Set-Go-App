@@ -2,10 +2,10 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import Screen from "../components/Screen";
 
-export default function Home({navigation}) {
-	return () => (
+export default function Calendar({navigation}) {
+	return (
 		<Screen>
-			Homepage
+			Calendar
 		</Screen>
 	);
 };
