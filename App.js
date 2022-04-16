@@ -3,8 +3,8 @@ import { StatusBar } from 'expo-status-bar';
 import { TabNavigator } from "./src/components/Tabs";
 import { colors } from "./constants.json";
 import { useEffect, useState } from "react";
-import { instantiate, lister } from "./src/utils/storage";
 import AppLoading from "expo-app-loading";
+import { basicInfo } from "./src/utils/storage";
 
 const theme = {
 	...DefaultTheme, dark: false, roundness: 2, colors: {
@@ -19,17 +19,11 @@ const theme = {
 export default function App() {
 	const [ready, setReady] = useState(false);
 	useEffect(() => {
-		instantiate()
+		basicInfo()
 			.then(() => {
 				setReady(true);
 			});
 	}, []);
-
-	useEffect(() => {
-		if(ready) {
-			lister().then(console.log);
-		}
-	}, [ready]);
 
 	if(!ready) return (<AppLoading/>);
 
