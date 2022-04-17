@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
-import { Text } from "react-native-paper";
+import { ScrollView, StyleSheet } from "react-native";
 import { colors } from "../../constants.json";
 import Screen from "../components/Screen";
 import DayControls from "../components/DayControls";
 import { useCurrentDate } from "../components/CurrentDateContext";
-import moment from "moment";
 import { readSector } from "../utils/storage";
+import TaskCard from "../components/TaskCard";
 
 const calendarStyles = StyleSheet.create({
 	screenOverrides: {
@@ -47,10 +46,7 @@ function CalendarList() {
 	return (
 		<ScrollView contentContainerStyle={calendarStyles.listContainer}>
 			{entries.map(entry => (
-				<View style={calendarStyles.listItem} key={entry.id}>
-					<Text>{entry.task}</Text>
-					<Text>{moment(entry.start).format("hh:mm A")} - {moment(entry.end).format("hh:mm A")}</Text>
-				</View>
+				<TaskCard entry={entry} key={entry.id}/>
 			))}
 		</ScrollView>
 	);

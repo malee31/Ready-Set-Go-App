@@ -5,7 +5,8 @@ import React from "react";
 
 const {cardStyle} = StyleSheet.create({
 	cardStyle: {
-		marginBottom: 10,
+		width: "100%",
+		marginBottom: 10
 	}
 })
 
