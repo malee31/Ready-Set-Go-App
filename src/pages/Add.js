@@ -90,7 +90,7 @@ export default function Add({ navigation }) {
 					<Card style={addStyles.card}>
 						<Card.Content>
 							<Title>{item.task}</Title>
-							<Paragraph>{moment(item.start).format("hh:mm A")} - {moment(item.end).format("hh:mm A")}</Paragraph>
+							<Paragraph>{moment(item.startTime).format("hh:mm A")} - {moment(item.endTime).format("hh:mm A")}</Paragraph>
 						</Card.Content>
 					</Card>
 				)}
@@ -120,25 +120,31 @@ export default function Add({ navigation }) {
 					<Text style={{ fontSize: 20, marginTop: 20 }}>Task</Text>
 					<TextInput
 						style={inputStyle}
-						onChangeText={setCurrentTask}
+						onChangeText={e => setCurrentTask({...currentTask, task: e})}
 						value={currentTask.task}
 						placeholder="Enter Task"
 					/>
 					<Text style={{ fontSize: 20, marginTop: 20 }}>Start Time</Text>
 					<TextInput
 						style={inputStyle}
-						onChangeText={setCurrentTask}
+						onChangeText={e => setCurrentTask({...currentTask, startTime: e})}
 						value={currentTask.startTime}
 						placeholder="Enter Start Time"
 					/>
 					<Text style={{ fontSize: 20, marginTop: 20 }}>End Time</Text>
 					<TextInput
 						style={inputStyle}
-						onChangeText={setCurrentTask}
+						onChangeText={e => setCurrentTask({...currentTask, endTime: e})}
 						value={currentTask.endTime}
 						placeholder="Enter End Time"
 					/>
-					<Button onPress={() => setTasks([...tasks, currentTask])}>Submit</Button>
+					<Button onPress={() => {
+						setTasks([...tasks, currentTask]);
+						console.log(currentTask);
+						hideModal();
+					}}>
+						Submit
+					</Button>
 				</Modal>
 			</Portal>
 
