@@ -3,7 +3,6 @@ import { Card, Paragraph, Title } from "react-native-paper";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { colors } from "../../constants.json";
-import { clear } from "react-native/Libraries/LogBox/Data/LogBoxData";
 
 const taskCardStyles = StyleSheet.create({
 	overlayContainer: {

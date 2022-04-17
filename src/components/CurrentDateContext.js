@@ -12,14 +12,14 @@ function now(momentInstance) {
 
 const currentDateContext = createContext(now(moment()));
 
-export default function CurrentDateProvider({children}) {
+export default function CurrentDateProvider({ children }) {
 	const [currentDate, setCurrentDate] = useState(now(moment()));
 	const currentDateValue = {
 		set: momentInstance => setCurrentDate(now(momentInstance)),
 		data: currentDate
 	};
 
-	return(
+	return (
 		<currentDateContext.Provider value={currentDateValue}>
 			{children}
 		</currentDateContext.Provider>

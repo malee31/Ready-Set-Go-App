@@ -9,7 +9,7 @@ import { useCurrentDate } from "../components/CurrentDateContext";
 import { useDayTasks } from "../components/DayTasksContext";
 
 const hourAndMinToSec = (hour, min) => {
-    return hour * 3600 + min * 60; 
+	return hour * 3600 + min * 60;
 }
 
 const timerStyles = StyleSheet.create({
@@ -77,7 +77,7 @@ export default function Timer() {
 	}, []);
 
 	useEffect(() => {
-		if (!entries[currentTaskIndex]) { 
+		if(!entries[currentTaskIndex]) {
 			setETA(0);
 			return;
 		}
@@ -122,7 +122,7 @@ export default function Timer() {
 						if(currentTaskIndex + 1 < entries.length) {
 							setCurrentTaskIndex(currentTaskIndex + 1);
 						}
-						
+
 					}}
 					style={timerStyles.finished}
 					contentStyle={timerStyles.finishedContent}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, TextInput } from "react-native";
+import { StyleSheet, TextInput, View } from "react-native";
 import { Text } from "react-native-paper";
 
 const { entryStyle, inputStyle } = StyleSheet.create({

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { Button, Modal, Portal, Switch } from "react-native-paper";
 import Screen from "../components/Screen";
 import DayControls from "../components/DayControls";
-import { addEntry, momentSectorRead } from "../utils/storage";
+import { addEntry } from "../utils/storage";
 import { useCurrentDate } from "../components/CurrentDateContext";
 import moment from "moment";
 import { toMomentStart } from "../utils/formatTime";
@@ -42,7 +42,7 @@ const addStyles = StyleSheet.create({
 
 export default function Add() {
 	const { thisMoment } = useCurrentDate();
-	const {entries, reload} = useDayTasks();
+	const { entries, reload } = useDayTasks();
 	const [currentTask, setCurrentTask] = useState({
 		task: "",
 		startTime: "",
@@ -109,7 +109,7 @@ export default function Add() {
 					<AddTaskEntry caption="Start Time" placeholderText="Enter Start Time" attribute="startTime" state={currentTask} setState={setCurrentTask}/>
 					<AddTaskEntry caption="End Time" placeholderText="Enter End Time" attribute="endTime" state={currentTask} setState={setCurrentTask}/>
 
-					<Text style={{ fontSize: 20, marginTop: 20 }}>Is Part of Getting Ready?</Text>
+					<Text style={{ fontSize: 20, marginTop: 20 }}>Flexible Start/End</Text>
 					<Switch
 						style={{ marginTop: 5 }}
 						value={currentTask.isGetReady}
