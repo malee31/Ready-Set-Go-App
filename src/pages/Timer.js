@@ -5,9 +5,31 @@ import formatTime from "../utils/formatTime.js"
 import Screen from "../components/Screen";
 import { colors } from "../../constants.json";
 import { vmin } from "../utils/viewport";
+import { readSector } from "../utils/storage";
+import { useCurrentDate } from "../components/CurrentDateContext";
 
 export default function Timer() {
-	const [currentTask, setCurrentTask] = useState("Current Task");
+	const {thisMoment} = useCurrentDate();
+	const [entries, setEntries] = useState([]);
+	const year = thisMoment.year();
+	const month = thisMoment.month();
+	const day = thisMoment.date();
+	const hasEntries = entries.length !== 0;
+
+	useEffect(() => {
+		setEntries([]);
+		setCurrentTaskIndex(0);
+		readSector({year, month})
+			.then(sector => sector.data.filter(entry => {
+				console.log(entry)
+				return entry.start.day === day;
+			}))
+			.then(setEntries);
+	}, [year, month, day]);
+
+	console.log(entries.length)
+	const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
+	const currentTask = hasEntries ? entries[currentTaskIndex].task : "No Tasks";
 	const [timeLeft, setTimeLeft] = useState(2);
 	const [ETA, setETA] = useState(0);
 	const absoluteTime = Math.abs(timeLeft);
@@ -16,7 +38,7 @@ export default function Timer() {
 	if(negative) {
 		timeString = `-${timeString}`;
 	}
-	
+
 	const timerStyles = StyleSheet.create({
 		curTask: {
 			textAlign: "center",
@@ -54,8 +76,6 @@ export default function Timer() {
 		return () => clearInterval(interval);
 	}, []);
 
-	const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
-
 	return (
 		<Screen>
 			<Button onPress={ () => {
@@ -89,7 +109,9 @@ export default function Timer() {
 					className={"finishedBtn"}
 					mode="contained"
 					onPress={() => {
-						console.log('Pressed')
+						if(currentTaskIndex + 1 < entries.length) {
+							setCurrentTaskIndex(currentTaskIndex + 1);
+						}
 					}}
 					style={timerStyles.finished}
 					contentStyle={timerStyles.finishedContent}
@@ -97,11 +119,9 @@ export default function Timer() {
 					Finished
 				</Button>
 			</View>
-			<Button onPress={ () => {
-				setCurrentTaskIndex((prevState) => (prevState + 1));
-				if (currentTaskIndex > 30) {
-					setCurrentTaskIndex(30);
-					console.log("reached last task")
+			<Button onPress={() => {
+				if(currentTaskIndex + 1 < entries.length) {
+					setCurrentTaskIndex(currentTaskIndex + 1);
 				}
 			}}>Next</Button>
 		</Screen>
