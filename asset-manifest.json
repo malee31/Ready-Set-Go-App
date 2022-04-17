@@ -1,0 +1,24 @@
+{
+  "files": {
+    "app.js": "/malee31/Ready-Set-Go-App/static/js/app.9b902014.chunk.js",
+    "app.js.map": "/malee31/Ready-Set-Go-App/static/js/app.9b902014.chunk.js.map",
+    "runtime~app.js": "/malee31/Ready-Set-Go-App/static/js/runtime~app.7f63302e.js",
+    "runtime~app.js.map": "/malee31/Ready-Set-Go-App/static/js/runtime~app.7f63302e.js.map",
+    "static/js/2.0145114f.chunk.js": "/malee31/Ready-Set-Go-App/static/js/2.0145114f.chunk.js",
+    "static/js/2.0145114f.chunk.js.map": "/malee31/Ready-Set-Go-App/static/js/2.0145114f.chunk.js.map",
+    "fonts/Ionicons.ttf": "/malee31/Ready-Set-Go-App/./fonts/Ionicons.ttf",
+    "fonts/MaterialCommunityIcons.ttf": "/malee31/Ready-Set-Go-App/./fonts/MaterialCommunityIcons.ttf",
+    "favicon-16.png": "/malee31/Ready-Set-Go-App/favicon-16.png",
+    "favicon-32.png": "/malee31/Ready-Set-Go-App/favicon-32.png",
+    "favicon.ico": "/malee31/Ready-Set-Go-App/favicon.ico",
+    "index.html": "/malee31/Ready-Set-Go-App/index.html",
+    "manifest.json": "/malee31/Ready-Set-Go-App/manifest.json",
+    "serve.json": "/malee31/Ready-Set-Go-App/serve.json",
+    "static/js/2.0145114f.chunk.js.LICENSE.txt": "/malee31/Ready-Set-Go-App/static/js/2.0145114f.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime~app.7f63302e.js",
+    "static/js/2.0145114f.chunk.js",
+    "static/js/app.9b902014.chunk.js"
+  ]
+}
