@@ -32,6 +32,12 @@ export default function Timer() {
 	const [currentTask, setCurrentTask] = useState("Current Task");
 	const [timeLeft, setTimeLeft] = useState(240);
 	const [ETA, setETA] = useState(0);
+	const absoluteTime = Math.abs(timeLeft);
+	const negative = timeLeft < 0;
+	let timeString = formatTime(absoluteTime);
+	if(negative) {
+		timeString = `-${timeString}`;
+	}
 
 	useEffect(() => {
 		const updateTime = () => setTimeLeft((prevState) => (prevState - 1));
@@ -53,7 +59,7 @@ export default function Timer() {
 				<Text
 					style={timerStyles.time}
 				>
-					{formatTime(timeLeft)}
+					{timeString}
 				</Text>
 
 				<Text
