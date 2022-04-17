@@ -8,6 +8,7 @@ const { screenStyles } = StyleSheet.create({
 		flexShrink: 1,
 		flexGrow: 1,
 		width: "100%",
+		height: "100%",
 		paddingHorizontal: "2%",
 		paddingVertical: "2%",
 		margin: 0,
@@ -17,10 +18,8 @@ const { screenStyles } = StyleSheet.create({
 
 export default function Screen({ style, children }) {
 	return (
-		<SafeAreaView>
-			<View style={StyleSheet.compose(screenStyles, style)}>
-				{children}
-			</View>
+		<SafeAreaView style={StyleSheet.compose(screenStyles, style)}>
+			{children}
 		</SafeAreaView>
 	);
 };

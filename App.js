@@ -5,6 +5,7 @@ import { colors } from "./constants.json";
 import { useEffect, useState } from "react";
 import AppLoading from "expo-app-loading";
 import { basicInfo } from "./src/utils/storage";
+import CurrentDateProvider from "./src/components/CurrentDateContext";
 
 const theme = {
 	...DefaultTheme, dark: false, roundness: 2, colors: {
@@ -29,8 +30,10 @@ export default function App() {
 
 	return (
 		<PaperProvider theme={theme}>
-			<StatusBar style="auto"/>
-			<TabNavigator/>
+			<CurrentDateProvider>
+				<StatusBar style="auto"/>
+				<TabNavigator/>
+			</CurrentDateProvider>
 		</PaperProvider>
 	);
 }

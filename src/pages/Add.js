@@ -3,6 +3,7 @@ import { FlatList, ScrollView, StyleSheet, View, Text, TextInput } from "react-n
 import { Button, Card, Paragraph, Title, Modal, Portal} from "react-native-paper";
 import Screen from "../components/Screen";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import DayControls from "../components/DayControls";
 
 const addStyles = StyleSheet.create({
 	weekLabels: {
@@ -98,7 +99,7 @@ export default function Add({ navigation }) {
 			task: "Get Dressed",
 			startTime: "10:00 AM",
 			endTime: "11:00 AM"
-		},
+		}
 
 	]);
 
@@ -113,15 +114,7 @@ export default function Add({ navigation }) {
 
 	return (
 		<Screen>
-			<View style={{ display: "flex", flexDirection: "row", alignContent: "space-between", marginTop: "4%" }}>
-				<Button style={addStyles.weekButtons} mode={daySelect == 0 ? "contained" : "text"} onPress={() => { setDaySelect(0)}}>Sun</Button>
-				<Button style={addStyles.weekButtons} mode={daySelect == 1 ? "contained" : "text"} onPress={() => { setDaySelect(1)}}>Mon</Button>
-				<Button style={addStyles.weekButtons} mode={daySelect == 2 ? "contained" : "text"} onPress={() => { setDaySelect(2)}}>Tue</Button>
-				<Button style={addStyles.weekButtons} mode={daySelect == 3 ? "contained" : "text"} onPress={() => { setDaySelect(3)}}>Wed</Button>
-				<Button style={addStyles.weekButtons} mode={daySelect == 4 ? "contained" : "text"} onPress={() => { setDaySelect(4)}}>Thu</Button>
-				<Button style={addStyles.weekButtons} mode={daySelect == 5 ? "contained" : "text"} onPress={() => { setDaySelect(5)}}>Fri</Button>
-				<Button style={addStyles.weekButtons} mode={daySelect == 6 ? "contained" : "text"} onPress={() => { setDaySelect(6)}}>Sat</Button>
-			</View>
+			<DayControls/>
 				<FlatList 
 					style={addStyles.listContainer}
 					data={tasks}
@@ -144,7 +137,7 @@ export default function Add({ navigation }) {
 						padding: 30, 
 						height: "90%",
 				}}>
-					<Button icon={"window-close"} onPress={hideModal} contentStyle={{maxWidth: "5%"}}></Button>
+					<Button icon={"window-close"} onPress={hideModal} contentStyle={{}}></Button>
 					<Text>Add New Task</Text>
 					<Text></Text>
 				</Modal>
