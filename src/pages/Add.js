@@ -1,7 +1,25 @@
 import React, { useState } from "react";
-import { Text, View, FlatList, ScrollView } from "react-native";
+import { FlatList, ScrollView, StyleSheet, View } from "react-native";
 import { Button, Card, Paragraph, Title } from "react-native-paper";
 import Screen from "../components/Screen";
+
+const addStyles = StyleSheet.create({
+	weekLabels: {
+		display: "flex",
+		flexDirection: "row",
+		alignContent: "space-between",
+		marginVertical: "4%",
+		width: "100%"
+	},
+	weekButtons: {
+		flexShrink: 1,
+		flexGrow: 1
+	},
+	listContainer: {
+		flexShrink: 1,
+		flexGrow: 1
+	}
+});
 
 export default function Add({ navigation }) {
 	const [tasks, setTasks] = useState([
@@ -77,32 +95,28 @@ export default function Add({ navigation }) {
 		},
 
 	]);
-	
+
 
 	// 0-6 means sun-sat
 	const [daySelect, setDaySelect] = useState(0);
 
 	return (
 		<Screen>
-			<View style={{ display: "flex", flexDirection: "column", alignContent: "space-around", marginTop: "4%"}}>
-				<View style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
-					<Button mode={daySelect==0?"contained":"text"} onPress={ () => { setDaySelect(0)}}>Sun</Button>
-					<Button mode={daySelect==1?"contained":"text"} onPress={ () => { setDaySelect(1)}}>Mon</Button>
-					<Button mode={daySelect==2?"contained":"text"} onPress={ () => { setDaySelect(2)}}>Tue</Button>
-					<Button mode={daySelect==3?"contained":"text"} onPress={ () => { setDaySelect(3)}}>Wed</Button>
-					<Button mode={daySelect==4?"contained":"text"} onPress={ () => { setDaySelect(4)}}>Thu</Button>
-					<Button mode={daySelect==5?"contained":"text"} onPress={ () => { setDaySelect(5)}}>Fri</Button>
-					<Button mode={daySelect==6?"contained":"text"} onPress={ () => { setDaySelect(6)}}>Sat</Button>
-				</View>
+			<View style={{ display: "flex", flexDirection: "row", alignContent: "space-between", marginTop: "4%" }}>
+				<Button style={addStyles.weekButtons} mode={daySelect == 0 ? "contained" : "text"} onPress={() => { setDaySelect(0)}}>Sun</Button>
+				<Button style={addStyles.weekButtons} mode={daySelect == 1 ? "contained" : "text"} onPress={() => { setDaySelect(1)}}>Mon</Button>
+				<Button style={addStyles.weekButtons} mode={daySelect == 2 ? "contained" : "text"} onPress={() => { setDaySelect(2)}}>Tue</Button>
+				<Button style={addStyles.weekButtons} mode={daySelect == 3 ? "contained" : "text"} onPress={() => { setDaySelect(3)}}>Wed</Button>
+				<Button style={addStyles.weekButtons} mode={daySelect == 4 ? "contained" : "text"} onPress={() => { setDaySelect(4)}}>Thu</Button>
+				<Button style={addStyles.weekButtons} mode={daySelect == 5 ? "contained" : "text"} onPress={() => { setDaySelect(5)}}>Fri</Button>
+				<Button style={addStyles.weekButtons} mode={daySelect == 6 ? "contained" : "text"} onPress={() => { setDaySelect(6)}}>Sat</Button>
 			</View>
-			<View style={{paddingTop: 10}}>
-			<ScrollView style={{ flex : 1, flexGrow: 1}}>
+			<ScrollView style={addStyles.listContainer}>
 				<FlatList
-					
 					data={tasks}
 					// keyExtractor={(item) => item.id}
 					renderItem={({ item }) => (
-						<Card style={{marginTop: 10}}>
+						<Card style={{ marginTop: 10 }}>
 							<Card.Content>
 								<Title>{item.task}</Title>
 								<Paragraph>{item.startTime} - {item.endTime}</Paragraph>
@@ -111,8 +125,6 @@ export default function Add({ navigation }) {
 					)}
 				/>
 			</ScrollView>
-			
-			</View>
 		</Screen>
 	);
 };

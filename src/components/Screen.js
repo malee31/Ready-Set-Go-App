@@ -5,6 +5,7 @@ const { screenStyles } = StyleSheet.create({
 	screenStyles: {
 		flexDirection: "column",
 		alignContent: "center",
+		flexShrink: 1,
 		flexGrow: 1,
 		width: "100%",
 		paddingHorizontal: "2%",
