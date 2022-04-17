@@ -12,3 +12,6 @@ Read the release descriptions for more details on what has been added or changed
 This project is continuously deployed using GitHub Actions!<br>
 A live web version of the app is continuously [deployed on GitHub Pages](https://malee31.github.io/Ready-Set-Go-App/)!<br>
 Feel free to check it out!
+
+# Demo
+See a demo of the App in use in the `demo/` folder!
