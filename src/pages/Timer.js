@@ -61,7 +61,7 @@ export default function Timer() {
 			<Button onPress={ () => {
 				setCurrentTaskIndex((prevState) => (prevState - 1));
 				if (currentTaskIndex < 0) {
-					setCurrentTask(0);
+					setCurrentTaskIndex(0);
 					console.log("reached first task")
 				}
 			}}>
@@ -100,7 +100,7 @@ export default function Timer() {
 			<Button onPress={ () => {
 				setCurrentTaskIndex((prevState) => (prevState + 1));
 				if (currentTaskIndex > 30) {
-					setCurrentTask(30);
+					setCurrentTaskIndex(30);
 					console.log("reached last task")
 				}
 			}}>Next</Button>

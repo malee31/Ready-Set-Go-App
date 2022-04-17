@@ -133,7 +133,6 @@ export default function Add({ navigation }) {
 					contentContainerStyle={{
 						backgroundColor: 'white',
 						padding: 30,
-						height: "90%"
 					}}
 				>
 					<View style={{
