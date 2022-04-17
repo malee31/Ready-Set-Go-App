@@ -14,7 +14,7 @@ const Tab = createMaterialBottomTabNavigator();
 export function TabNavigator() {
 	return (
 		<NavigationContainer><Tab.Navigator
-			initialRouteName="Home"
+			initialRouteName="Calendar"
 			backBehavior="order"
 			shifting={true}
 			inactiveColor={colors.darkgray}

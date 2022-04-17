@@ -14,9 +14,9 @@ const { screenStyles } = StyleSheet.create({
 	}
 });
 
-export default function Screen({ children }) {
+export default function Screen({ style, children }) {
 	return (
-		<View style={screenStyles}>
+		<View style={StyleSheet.compose(screenStyles, style)}>
 			{children}
 		</View>
 	);

@@ -29,34 +29,28 @@ export default function Timer() {
 		}
 	});
 
-	const [ETA, setETA] = useState(0);
+	const [currentTask, setCurrentTask] = useState("Current Task");
 	const [timeLeft, setTimeLeft] = useState(240);
-	const [currentTask, setCurrentTask] = useState("Current Task")
+	const [ETA, setETA] = useState(0);
 
 	useEffect(() => {
-		const getTime = () => {
-			const updateTime = () => {
-				setTimeLeft((prevState) => (prevState - 1))
-			}
-			var interval = setInterval(updateTime, 1000);
-		}
-		getTime();
+		const updateTime = () => setTimeLeft((prevState) => (prevState - 1));
+		const interval = setInterval(updateTime, 1000);
+		updateTime();
+		return () => clearInterval(interval);
 	}, []);
-
 
 	return (
 		<Screen>
 			<Button>previous</Button>
 			<View>
 				<Text
-					adjustsFontSizeToFit={true}
 					style={timerStyles.curTask}
 				>
 					{currentTask}
 				</Text>
 
 				<Text
-					adjustsFontSizeToFit={true}
 					style={timerStyles.time}
 				>
 					{formatTime(timeLeft)}
@@ -79,9 +73,8 @@ export default function Timer() {
 				>
 					Finished
 				</Button>
-
 			</View>
-			<Button>next</Button>
+			<Button>Next</Button>
 		</Screen>
 	);
 };
