@@ -1,11 +1,11 @@
 {
   "files": {
-    "app.js": "/Ready-Set-Go-App/static/js/app.9b902014.chunk.js",
-    "app.js.map": "/Ready-Set-Go-App/static/js/app.9b902014.chunk.js.map",
+    "app.js": "/Ready-Set-Go-App/static/js/app.341f1d4d.chunk.js",
+    "app.js.map": "/Ready-Set-Go-App/static/js/app.341f1d4d.chunk.js.map",
     "runtime~app.js": "/Ready-Set-Go-App/static/js/runtime~app.2730aa4c.js",
     "runtime~app.js.map": "/Ready-Set-Go-App/static/js/runtime~app.2730aa4c.js.map",
-    "static/js/2.0145114f.chunk.js": "/Ready-Set-Go-App/static/js/2.0145114f.chunk.js",
-    "static/js/2.0145114f.chunk.js.map": "/Ready-Set-Go-App/static/js/2.0145114f.chunk.js.map",
+    "static/js/2.1928ef87.chunk.js": "/Ready-Set-Go-App/static/js/2.1928ef87.chunk.js",
+    "static/js/2.1928ef87.chunk.js.map": "/Ready-Set-Go-App/static/js/2.1928ef87.chunk.js.map",
     "fonts/Ionicons.ttf": "/Ready-Set-Go-App/./fonts/Ionicons.ttf",
     "fonts/MaterialCommunityIcons.ttf": "/Ready-Set-Go-App/./fonts/MaterialCommunityIcons.ttf",
     "favicon-16.png": "/Ready-Set-Go-App/favicon-16.png",
@@ -14,11 +14,11 @@
     "index.html": "/Ready-Set-Go-App/index.html",
     "manifest.json": "/Ready-Set-Go-App/manifest.json",
     "serve.json": "/Ready-Set-Go-App/serve.json",
-    "static/js/2.0145114f.chunk.js.LICENSE.txt": "/Ready-Set-Go-App/static/js/2.0145114f.chunk.js.LICENSE.txt"
+    "static/js/2.1928ef87.chunk.js.LICENSE.txt": "/Ready-Set-Go-App/static/js/2.1928ef87.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime~app.2730aa4c.js",
-    "static/js/2.0145114f.chunk.js",
-    "static/js/app.9b902014.chunk.js"
+    "static/js/2.1928ef87.chunk.js",
+    "static/js/app.341f1d4d.chunk.js"
   ]
 }

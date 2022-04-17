@@ -1,10 +1,10 @@
 {
-  "background_color": "#ffffff",
+  "background_color": "#FFFFFF",
   "description": "",
   "display": "standalone",
   "lang": "en",
-  "name": "ready-set-go-app",
-  "short_name": "ready-set-go-app",
+  "name": "Ready Set GO!",
+  "short_name": "Ready Set GO!",
   "start_url": "/?utm_source=web_app_manifest",
   "orientation": "portrait",
   "icons": [
