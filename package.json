@@ -2,6 +2,7 @@
   "name": "ready-set-go-app",
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
+  "homepage": "/Ready-Set-Go-App",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -41,6 +42,5 @@
   "bugs": {
     "url": "https://github.com/malee31/Ready-Set-Go-App/issues"
   },
-  "homepage": "https://github.com/malee31/Ready-Set-Go-App#readme",
   "description": ""
 }
