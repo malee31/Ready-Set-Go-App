@@ -71,9 +71,10 @@ function CalendarList() {
 		<ScrollView style={calendarStyles.listContainer}>
 			<FlatList
 				data={[0, 0, 0]}
+				keyExtractor={(data, index) => index}
 				renderItem={
 					() => {
-						return <View style={calendarStyles.listItem}>Yes</View>
+						return <View style={calendarStyles.listItem}><Text>Yes</Text></View>
 					}
 				}
 			/>

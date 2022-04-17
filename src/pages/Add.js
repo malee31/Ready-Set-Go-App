@@ -18,6 +18,9 @@ const addStyles = StyleSheet.create({
 	listContainer: {
 		flexShrink: 1,
 		flexGrow: 1
+	},
+	card: {
+		marginBottom: 10,
 	}
 });
 
@@ -114,9 +117,9 @@ export default function Add({ navigation }) {
 			<ScrollView style={addStyles.listContainer}>
 				<FlatList
 					data={tasks}
-					// keyExtractor={(item) => item.id}
+					keyExtractor={(data, index) => index}
 					renderItem={({ item }) => (
-						<Card style={{ marginTop: 10 }}>
+						<Card style={addStyles.card}>
 							<Card.Content>
 								<Title>{item.task}</Title>
 								<Paragraph>{item.startTime} - {item.endTime}</Paragraph>
