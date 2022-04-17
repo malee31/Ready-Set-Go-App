@@ -6,6 +6,7 @@ import DayControls from "../components/DayControls";
 import { addEntry, momentSectorRead } from "../utils/storage";
 import { useCurrentDate } from "../components/CurrentDateContext";
 import moment from "moment";
+import TaskCard from "../components/TaskCard";
 
 const addStyles = StyleSheet.create({
 	weekLabels: {
@@ -24,9 +25,6 @@ const addStyles = StyleSheet.create({
 	listContainer: {
 		flexShrink: 1,
 		flexGrow: 1
-	},
-	card: {
-		marginBottom: 10,
 	}
 });
 
@@ -90,9 +88,8 @@ export default function Add({ navigation }) {
 	});
 
 	const save = () => {
-		const startMoment = moment(currentTask.startTime, "hh:mm A").year(thisMoment.year()).month(thisMoment.month()).day(thisMoment.date());
-		const endMoment = moment(currentTask.endTime, "hh:mm A").year(thisMoment.year()).month(thisMoment.month()).day(thisMoment.date());
-		console.log("ADDING");
+		const startMoment = moment(currentTask.startTime, "hh:mm A").year(thisMoment.year()).month(thisMoment.month()).date(thisMoment.date());
+		const endMoment = moment(currentTask.endTime, "hh:mm A").year(thisMoment.year()).month(thisMoment.month()).date(thisMoment.date());
 		const newEntry = {
 			task: currentTask.task,
 			start: toMomentStart(startMoment),
@@ -108,8 +105,6 @@ export default function Add({ navigation }) {
 		});
 	}
 
-	console.log(tasks)
-
 	return (
 		<Screen>
 			<DayControls/>
@@ -118,12 +113,7 @@ export default function Add({ navigation }) {
 				data={tasks}
 				keyExtractor={(data, index) => index}
 				renderItem={({ item }) => (
-					<Card style={addStyles.card}>
-						<Card.Content>
-							<Title>{item.task}</Title>
-							<Paragraph>{moment(item.start).format("hh:mm A")} - {moment(item.end).format("hh:mm A")}</Paragraph>
-						</Card.Content>
-					</Card>
+					<TaskCard entry={item}/>
 				)}
 			/>
 			<Button icon={"plus"} onPress={showModal}>Add New Task</Button>
