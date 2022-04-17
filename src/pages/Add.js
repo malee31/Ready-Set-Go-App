@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet, Text, TextInput, View } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import { Button, Modal, Portal, Switch } from "react-native-paper";
 import Screen from "../components/Screen";
 import DayControls from "../components/DayControls";
@@ -49,10 +49,9 @@ export default function Add() {
 		isGetReady: false
 	});
 
-	// TODO: Better rerun condition
 	useEffect(() => {
 		momentSectorRead(thisMoment, true).then(setTasks);
-	}, [currentTask.task === 0, thisMoment.format("L")]);
+	}, [thisMoment.format("L")]);
 
 	// Popup
 	const [visible, setVisible] = React.useState(true);
@@ -68,13 +67,14 @@ export default function Add() {
 			end: toMomentStart(endMoment)
 		};
 
-		return addEntry(newEntry).then(() => {
-			setCurrentTask({
-				task: "",
-				startTime: "",
-				endTime: ""
+		return addEntry(newEntry)
+			.then(() => {
+				setCurrentTask({
+					task: "",
+					startTime: "",
+					endTime: ""
+				});
 			});
-		});
 	}
 
 	return (
@@ -107,41 +107,19 @@ export default function Add() {
 					</View>
 					<Text style={{ fontSize: 30, marginTop: 20 }}>Add New Task</Text>
 
-					<Text style={{ fontSize: 20, marginTop: 20 }}>Task</Text>
-					<TextInput
-						style={addStyles.inputStyle}
-						onChangeText={e => setCurrentTask({ ...currentTask, task: e })}
-						value={currentTask.task}
-						placeholder="Enter Task"
-					/>
+					<AddTaskEntry caption="Task" placeholderText="Enter Task" attribute="task" state={currentTask} setState={setCurrentTask}/>
+					<AddTaskEntry caption="Start Time" placeholderText="Enter Start Time" attribute="startTime" state={currentTask} setState={setCurrentTask}/>
+					<AddTaskEntry caption="End Time" placeholderText="Enter End Time" attribute="endTime" state={currentTask} setState={setCurrentTask}/>
 
-					<Text style={{ fontSize: 20, marginTop: 20 }}>Start Time</Text>
-					<TextInput
-						style={addStyles.inputStyle}
-						onChangeText={e => setCurrentTask({ ...currentTask, startTime: e })}
-						value={currentTask.startTime}
-						placeholder="Enter Start Time"
-					/>
-
-					<Text style={{ fontSize: 20, marginTop: 20 }}>End Time</Text>
-					<TextInput
-						style={addStyles.inputStyle}
-						onChangeText={e => setCurrentTask({ ...currentTask, endTime: e })}
-						value={currentTask.endTime}
-						placeholder="Enter End Time"
-					/>
-					
 					<Text style={{ fontSize: 20, marginTop: 20 }}>Is Part of Getting Ready?</Text>
-					<Switch 
+					<Switch
 						style={{ marginTop: 5 }}
-						value={currentTask.isGetReady} 
-						onValueChange={ () => {
+						value={currentTask.isGetReady}
+						onValueChange={() => {
 							setCurrentTask({ ...currentTask, isGetReady: !currentTask.isGetReady })
-						}} 
+						}}
 					/>
-					<Button onPress={() => {
-						save().then(hideModal).catch(console.error);
-					}}>
+					<Button onPress={() => save().then(hideModal).catch(console.error)}>
 						Submit
 					</Button>
 				</Modal>

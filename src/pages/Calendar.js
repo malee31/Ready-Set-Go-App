@@ -32,10 +32,16 @@ const calendarStyles = StyleSheet.create({
 function CalendarList() {
 	const { thisMoment } = useCurrentDate();
 	const [entries, setEntries] = useState([]);
+	const [loaded, setLoaded] = useState(false);
 
 	useEffect(() => {
-		setEntries([]);
-		momentSectorRead(thisMoment, true).then(setEntries);
+		if(loaded) {
+			setLoaded(false);
+		}
+		momentSectorRead(thisMoment, true).then(newEntries => {
+			setEntries(newEntries);
+			setLoaded(true);
+		});
 	}, [thisMoment.format("L")]);
 
 	return (
