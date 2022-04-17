@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, TextInput, View } from "react-native";
-import { Button, Modal, Portal } from "react-native-paper";
+import { Button, Modal, Portal, Switch } from "react-native-paper";
 import Screen from "../components/Screen";
 import DayControls from "../components/DayControls";
 import { addEntry, momentSectorRead } from "../utils/storage";
@@ -8,6 +8,7 @@ import { useCurrentDate } from "../components/CurrentDateContext";
 import moment from "moment";
 import { toMomentStart } from "../utils/formatTime";
 import TaskCard from "../components/TaskCard";
+import AddTaskEntry from "../components/AddTaskEntry";
 
 const addStyles = StyleSheet.create({
 	screenOverrides: {
@@ -44,7 +45,8 @@ export default function Add() {
 	const [currentTask, setCurrentTask] = useState({
 		task: "",
 		startTime: "",
-		endTime: ""
+		endTime: "",
+		isGetReady: false
 	});
 
 	// TODO: Better rerun condition
@@ -104,6 +106,7 @@ export default function Add() {
 						></Button>
 					</View>
 					<Text style={{ fontSize: 30, marginTop: 20 }}>Add New Task</Text>
+
 					<Text style={{ fontSize: 20, marginTop: 20 }}>Task</Text>
 					<TextInput
 						style={addStyles.inputStyle}
@@ -111,6 +114,7 @@ export default function Add() {
 						value={currentTask.task}
 						placeholder="Enter Task"
 					/>
+
 					<Text style={{ fontSize: 20, marginTop: 20 }}>Start Time</Text>
 					<TextInput
 						style={addStyles.inputStyle}
@@ -118,12 +122,22 @@ export default function Add() {
 						value={currentTask.startTime}
 						placeholder="Enter Start Time"
 					/>
+
 					<Text style={{ fontSize: 20, marginTop: 20 }}>End Time</Text>
 					<TextInput
 						style={addStyles.inputStyle}
 						onChangeText={e => setCurrentTask({ ...currentTask, endTime: e })}
 						value={currentTask.endTime}
 						placeholder="Enter End Time"
+					/>
+					
+					<Text style={{ fontSize: 20, marginTop: 20 }}>Is Part of Getting Ready?</Text>
+					<Switch 
+						style={{ marginTop: 5 }}
+						value={currentTask.isGetReady} 
+						onValueChange={ () => {
+							setCurrentTask({ ...currentTask, isGetReady: !currentTask.isGetReady })
+						}} 
 					/>
 					<Button onPress={() => {
 						save().then(hideModal).catch(console.error);
