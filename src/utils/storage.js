@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { v4 as uuidv4 } from "uuid";
+import uuid from "react-native-uuid";
+const uuidv4 = uuid.v4;
 
 // Beware of race conditions! One write at a time!
 
@@ -15,7 +16,7 @@ import { v4 as uuidv4 } from "uuid";
  * @property {number} month Month 0-indexed
  * @property {number} day Day of month 1-indexed
  * @property {number} [hour = 0] Hour 0-indexed
- * @property {number} [minutes = 0] Minutes 1-indexed
+ * @property {number} [minute = 0] Minutes 1-indexed
  */
 
 /**
@@ -79,6 +80,7 @@ export function makeIdentifier(year, month, id) {
 }
 
 let cachedSector = {};
+
 export async function readSector({ year, month }) {
 	const SECTOR_NAME = `${year}/${month}`;
 	if(SECTOR_NAME === cachedSector.KEY) {
@@ -110,7 +112,25 @@ export async function saveSector(sector) {
 export async function addEntry(newEntry) {
 	newEntry.id = uuidv4();
 	const sector = await readSector(makeIdentifier(newEntry.start.year, newEntry.start.month));
-	sector.data.push(newEntry);
+	sector.data.push(newEntry)
+	sector.data.sort((a, b) => {
+		let diff = a.start.hour - b.start.hour;
+		if(diff === 0) {
+			diff = a.start.minute - b.start.minute;
+		}
+		if(diff === 0) {
+			console.log("HOUR COMP")
+			diff = a.end.hour - b.end.hour;
+		}
+		if(diff === 0) {
+			diff = a.end.minute - b.end.minute;
+		}
+		if(diff === 0) {
+			diff = a.task.localeCompare(b.task);
+		}
+		return diff;
+	});
+
 	await saveSector(sector);
 	if(newEntry.categoryId) {
 		getCategory(newEntry.categoryId).push(newEntry.id);

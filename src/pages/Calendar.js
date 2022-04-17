@@ -32,16 +32,13 @@ const calendarStyles = StyleSheet.create({
 function CalendarList() {
 	const { thisMoment } = useCurrentDate();
 	const [entries, setEntries] = useState([]);
-	const year = thisMoment.year();
-	const month = thisMoment.month();
-	const day = thisMoment.date();
 
 	useEffect(() => {
 		setEntries([]);
-		readSector({year, month})
-			.then(sector => sector.data.filter(entry => entry.start.day === day))
+		readSector({ year: thisMoment.year(), month: thisMoment.month() })
+			.then(sector => sector.data.filter(entry => entry.start.day === thisMoment.date()))
 			.then(setEntries);
-	}, [year, month, day]);
+	}, [thisMoment.format("L")]);
 
 	return (
 		<ScrollView contentContainerStyle={calendarStyles.listContainer}>

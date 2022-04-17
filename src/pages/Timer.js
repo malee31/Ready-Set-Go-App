@@ -9,25 +9,9 @@ import { readSector } from "../utils/storage";
 import { useCurrentDate } from "../components/CurrentDateContext";
 
 export default function Timer() {
-	const {thisMoment} = useCurrentDate();
+	const { thisMoment } = useCurrentDate();
 	const [entries, setEntries] = useState([]);
-	const year = thisMoment.year();
-	const month = thisMoment.month();
-	const day = thisMoment.date();
 	const hasEntries = entries.length !== 0;
-
-	useEffect(() => {
-		setEntries([]);
-		setCurrentTaskIndex(0);
-		readSector({year, month})
-			.then(sector => sector.data.filter(entry => {
-				console.log(entry)
-				return entry.start.day === day;
-			}))
-			.then(setEntries);
-	}, [year, month, day]);
-
-	console.log(entries.length)
 	const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
 	const currentTask = hasEntries ? entries[currentTaskIndex].task : "No Tasks";
 	const [timeLeft, setTimeLeft] = useState(2);
@@ -38,6 +22,17 @@ export default function Timer() {
 	if(negative) {
 		timeString = `-${timeString}`;
 	}
+
+	useEffect(() => {
+		setEntries([]);
+		setCurrentTaskIndex(0);
+		readSector({ year: thisMoment.year(), month: thisMoment.month() })
+			.then(sector => sector.data.filter(entry => {
+				console.log(entry)
+				return entry.start.day === thisMoment.date();
+			}))
+			.then(setEntries);
+	}, [thisMoment.format("L")]);
 
 	const timerStyles = StyleSheet.create({
 		curTask: {
@@ -78,9 +73,9 @@ export default function Timer() {
 
 	return (
 		<Screen>
-			<Button onPress={ () => {
+			<Button onPress={() => {
 				setCurrentTaskIndex((prevState) => (prevState - 1));
-				if (currentTaskIndex < 0) {
+				if(currentTaskIndex < 0) {
 					setCurrentTask(0);
 					console.log("reached first task")
 				}

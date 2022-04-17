@@ -43,49 +43,25 @@ function toMomentStart(momentInstance) {
 }
 
 export default function Add({ navigation }) {
-	const [tasks, setTasks] = useState([]);
 	const { thisMoment } = useCurrentDate();
-	useEffect(() => {
-		// Force add 20 entries for testing
-		let promise = Promise.resolve();
-		// Array(20).fill(0).map(() => {
-		// 	promise = promise.then(() => {
-		// 		return addEntry({
-		// 			task: "Get Good",
-		// 			start: {
-		// 				year: thisMoment.year(),
-		// 				month: thisMoment.month(),
-		// 				day: thisMoment.date(),
-		// 				hour: 10
-		// 			},
-		// 			end: {
-		// 				year: thisMoment.year(),
-		// 				month: thisMoment.month(),
-		// 				day: thisMoment.date(),
-		// 				hour: 11
-		// 			}
-		// 		});
-		// 	});
-		// });
-
-		promise.then(() => {
-			momentSectorRead(thisMoment).then(sector => {
-				setTasks(sector.data);
-			});
-		});
-		// Force add end
-	}, []);
-
-	// Popup
-	const [visible, setVisible] = React.useState(true);
-	const showModal = () => setVisible(true);
-	const hideModal = () => setVisible(false);
-
+	const [tasks, setTasks] = useState([]);
 	const [currentTask, setCurrentTask] = useState({
 		task: "",
 		startTime: "",
 		endTime: ""
 	});
+	// TODO: Better rerun condition
+	useEffect(() => {
+		momentSectorRead(thisMoment)
+			.then(sector => {
+				setTasks(sector.data);
+			});
+	}, [currentTask.task === 0, thisMoment.format("L")]);
+
+	// Popup
+	const [visible, setVisible] = React.useState(true);
+	const showModal = () => setVisible(true);
+	const hideModal = () => setVisible(false);
 
 	const save = () => {
 		const startMoment = moment(currentTask.startTime, "hh:mm A").year(thisMoment.year()).month(thisMoment.month()).date(thisMoment.date());
@@ -101,7 +77,6 @@ export default function Add({ navigation }) {
 				startTime: "",
 				endTime: ""
 			});
-			setTasks([...tasks, newEntry]);
 		});
 	}
 
@@ -157,7 +132,7 @@ export default function Add({ navigation }) {
 						placeholder="Enter End Time"
 					/>
 					<Button onPress={() => {
-						save().then(hideModal)
+						save().then(hideModal).catch(console.error);
 					}}>
 						Submit
 					</Button>
