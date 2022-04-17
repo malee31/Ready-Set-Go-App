@@ -7,6 +7,14 @@
   "short_name": "Ready Set GO!",
   "start_url": "/?utm_source=web_app_manifest",
   "orientation": "portrait",
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "http://play.google.com/store/apps/details?id=com.malee31.readysetgoapp",
+      "id": "com.malee31.readysetgoapp"
+    }
+  ],
+  "prefer_related_applications": true,
   "icons": [
     {
       "src": "/Ready-Set-Go-App/pwa/chrome-icon/chrome-icon-144.png",
