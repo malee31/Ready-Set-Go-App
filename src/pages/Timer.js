@@ -5,39 +5,53 @@ import formatTime from "../utils/formatTime.js"
 import Screen from "../components/Screen";
 import { colors } from "../../constants.json";
 import { vmin } from "../utils/viewport";
-import { momentSectorRead } from "../utils/storage";
 import { useCurrentDate } from "../components/CurrentDateContext";
+import { useDayTasks } from "../components/DayTasksContext";
+
+const hourAndMinToSec = (hour, min) => {
+    return hour * 3600 + min * 60; 
+}
+
+const timerStyles = StyleSheet.create({
+	timer: {
+		display: "flex",
+		flexDirection: "column",
+		justifyContent: "center",
+		alignItems: "center",
+		flexGrow: 1
+	},
+	finished: {
+		marginTop: "10%"
+	},
+	finishedContent: {
+		padding: 1
+	}
+});
 
 export default function Timer() {
-	const { thisMoment } = useCurrentDate();
-	const [entries, setEntries] = useState([]);
+	const { entries } = useDayTasks();
 	const hasEntries = entries.length !== 0;
 	const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
+	const { thisMoment } = useCurrentDate();
+	useEffect(() => {
+		if(currentTaskIndex !== 0) {
+			setCurrentTaskIndex(0);
+		}
+	}, [thisMoment.format("L")]);
+
+	// console.log(formatTime(hourAndMinToSec(entries[currentTaskIndex].end.hour, entries[currentTaskIndex].end.minute)));
+
 	const currentTask = hasEntries ? entries[currentTaskIndex].task : "No Tasks";
 	const [timeLeft, setTimeLeft] = useState(2);
-	const [ETA, setETA] = useState("10:00");
+	const [ETA, setETA] = useState(0);
 	const absoluteTime = Math.abs(timeLeft);
 	const negative = timeLeft < 0;
 	const timeString = `${negative ? "-" : ""}${formatTime(absoluteTime)}`;
 
-	useEffect(() => {
-		setCurrentTaskIndex(0);
-		setEntries([]);
-		momentSectorRead(thisMoment, true).then(setEntries);
-
-	}, [thisMoment.format("L")]);
-
-	const timerStyles = StyleSheet.create({
+	const conditionalTimerStyles = StyleSheet.create({
 		curTask: {
 			textAlign: "center",
 			fontSize: vmin(13)
-		},
-		timer: {
-			display: "flex",
-			flexDirection: "column",
-			justifyContent: "center",
-			alignItems: "center",
-			flexGrow: 1
 		},
 		time: {
 			textAlign: "center",
@@ -52,12 +66,7 @@ export default function Timer() {
 			fontSize: vmin(8),
 			color: colors.darkgray
 		},
-		finished: {
-			marginTop: "10%"
-		},
-		finishedContent: {
-			padding: 1
-		}
+
 	});
 
 	useEffect(() => {
@@ -67,31 +76,38 @@ export default function Timer() {
 		return () => clearInterval(interval);
 	}, []);
 
+	useEffect(() => {
+		if (!entries[currentTaskIndex]) { 
+			setETA(0);
+			return;
+		}
+		setETA(formatTime(hourAndMinToSec(entries[currentTaskIndex].end.hour, entries[currentTaskIndex].end.minute)));
+	}, [entries[currentTaskIndex]?.id]);
+
 	return (
 		<Screen>
 			<Button onPress={() => {
-				setCurrentTaskIndex((prevState) => (prevState - 1));
-				if(currentTaskIndex < 0) {
-					setCurrentTaskIndex(0);
+				if(currentTaskIndex > 0) {
+					setCurrentTaskIndex(currentTaskIndex - 1);
 				}
 			}}>
-				previous
+				Previous
 			</Button>
 			<View style={timerStyles.timer}>
 				<Text
-					style={timerStyles.curTask}
+					style={conditionalTimerStyles.curTask}
 				>
 					{currentTask}
 				</Text>
 
 				<Text
-					style={timerStyles.time}
+					style={conditionalTimerStyles.time}
 				>
 					{timeString}
 				</Text>
 
 				<Text
-					style={timerStyles.eta}
+					style={conditionalTimerStyles.eta}
 				>
 					ETA: {ETA}
 				</Text>

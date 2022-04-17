@@ -9,6 +9,7 @@ import moment from "moment";
 import { toMomentStart } from "../utils/formatTime";
 import TaskCard from "../components/TaskCard";
 import AddTaskEntry from "../components/AddTaskEntry";
+import { useDayTasks } from "../components/DayTasksContext";
 
 const addStyles = StyleSheet.create({
 	screenOverrides: {
@@ -41,17 +42,13 @@ const addStyles = StyleSheet.create({
 
 export default function Add() {
 	const { thisMoment } = useCurrentDate();
-	const [tasks, setTasks] = useState([]);
+	const {entries, reload} = useDayTasks();
 	const [currentTask, setCurrentTask] = useState({
 		task: "",
 		startTime: "",
 		endTime: "",
 		isGetReady: false
 	});
-
-	useEffect(() => {
-		momentSectorRead(thisMoment, true).then(setTasks);
-	}, [thisMoment.format("L")]);
 
 	// Popup
 	const [visible, setVisible] = React.useState(true);
@@ -74,6 +71,7 @@ export default function Add() {
 					startTime: "",
 					endTime: ""
 				});
+				reload();
 			});
 	}
 
@@ -82,7 +80,7 @@ export default function Add() {
 			<DayControls/>
 			<FlatList
 				style={addStyles.listContainer}
-				data={tasks}
+				data={entries}
 				keyExtractor={(data, index) => index}
 				renderItem={({ item }) => <TaskCard entry={item}/>}
 			/>
