@@ -7,6 +7,7 @@ import { addEntry, momentSectorRead } from "../utils/storage";
 import { useCurrentDate } from "../components/CurrentDateContext";
 import moment from "moment";
 import TaskCard from "../components/TaskCard";
+import AddTaskEntry from "../components/AddTaskEntry";
 
 const addStyles = StyleSheet.create({
 	weekLabels: {
@@ -110,6 +111,7 @@ export default function Add({ navigation }) {
 						></Button>
 					</View>
 					<Text style={{ fontSize: 30, marginTop: 20 }}>Add New Task</Text>
+
 					<Text style={{ fontSize: 20, marginTop: 20 }}>Task</Text>
 					<TextInput
 						style={inputStyle}
@@ -117,6 +119,7 @@ export default function Add({ navigation }) {
 						value={currentTask.task}
 						placeholder="Enter Task"
 					/>
+
 					<Text style={{ fontSize: 20, marginTop: 20 }}>Start Time</Text>
 					<TextInput
 						style={inputStyle}
@@ -124,6 +127,7 @@ export default function Add({ navigation }) {
 						value={currentTask.startTime}
 						placeholder="Enter Start Time"
 					/>
+
 					<Text style={{ fontSize: 20, marginTop: 20 }}>End Time</Text>
 					<TextInput
 						style={inputStyle}
@@ -131,6 +135,7 @@ export default function Add({ navigation }) {
 						value={currentTask.endTime}
 						placeholder="Enter End Time"
 					/>
+					
 					<Text style={{ fontSize: 20, marginTop: 20 }}>Is Part of Getting Ready?</Text>
 					<Switch 
 						style={{ marginTop: 5 }}
