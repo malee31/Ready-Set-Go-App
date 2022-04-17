@@ -15,7 +15,7 @@ export default function Timer() {
 	const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
 	const currentTask = hasEntries ? entries[currentTaskIndex].task : "No Tasks";
 	const [timeLeft, setTimeLeft] = useState(2);
-	const [ETA, setETA] = useState(0);
+	const [ETA, setETA] = useState("10:00");
 	const absoluteTime = Math.abs(timeLeft);
 	const negative = timeLeft < 0;
 	const timeString = `${negative ? "-" : ""}${formatTime(absoluteTime)}`;
@@ -24,6 +24,7 @@ export default function Timer() {
 		setCurrentTaskIndex(0);
 		setEntries([]);
 		momentSectorRead(thisMoment, true).then(setEntries);
+
 	}, [thisMoment.format("L")]);
 
 	const timerStyles = StyleSheet.create({
@@ -101,6 +102,7 @@ export default function Timer() {
 						if(currentTaskIndex + 1 < entries.length) {
 							setCurrentTaskIndex(currentTaskIndex + 1);
 						}
+
 					}}
 					style={timerStyles.finished}
 					contentStyle={timerStyles.finishedContent}
