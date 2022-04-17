@@ -1,19 +1,30 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { v4 as uuidv4 } from "uuid";
 
+// Beware of race conditions! One write at a time!
+
 /**
- * @type Sector - A chunk of data separated by months from storage
+ * @typedef Sector - A chunk of data separated by months from storage
  * @property {KEY} Where the chunk is stored. Used to resync the sector data
  * @property {Entry[]} data Entries contained in the sector
  */
 
 /**
- * @type Entry - An event that can be timed in the app
+ * @typedef MomentStart
+ * @property {number} year Year 1-indexed
+ * @property {number} month Month 0-indexed
+ * @property {number} day Day of month 1-indexed
+ * @property {number} [hour = 0] Hour 0-indexed
+ * @property {number} [minutes = 0] Minutes 1-indexed
+ */
+
+/**
+ * @typedef Entry - An event that can be timed in the app
  * @property {string} id Unique ID for the entry
  * @property {string|undefined} categoryId Unique ID for the category the event belongs to if exists
  * @property {string} task Title of entry. Size limit TBA
- * @property {number} start Start time in epoch
- * @property {number} end End time in epoch
+ * @property {MomentStart} start Start time in epoch
+ * @property {MomentStart} end End time in epoch
  */
 
 /**
@@ -67,8 +78,12 @@ export function makeIdentifier(year, month, id) {
 	};
 }
 
+let cachedSector = {};
 export async function readSector({ year, month }) {
 	const SECTOR_NAME = `${year}/${month}`;
+	if(SECTOR_NAME === cachedSector.KEY) {
+		return cachedSector;
+	}
 	const sector = {
 		KEY: SECTOR_NAME,
 		data: []
@@ -83,7 +98,8 @@ export async function readSector({ year, month }) {
 	} catch(err) {
 		// Cannot read sector
 	}
-	return sector;
+	cachedSector = sector;
+	return cachedSector;
 }
 
 export async function saveSector(sector) {
@@ -91,9 +107,9 @@ export async function saveSector(sector) {
 	AsyncStorage.setItem(sector.KEY, JSON.stringify(sector.data));
 }
 
-export async function add(newEntry) {
+export async function addEntry(newEntry) {
 	newEntry.id = uuidv4();
-	const sector = await readSector(makeIdentifier(0, 0, newEntry.id));
+	const sector = await readSector(makeIdentifier(newEntry.start.year, newEntry.start.month));
 	sector.data.push(newEntry);
 	await saveSector(sector);
 	if(newEntry.categoryId) {
@@ -102,10 +118,14 @@ export async function add(newEntry) {
 	}
 }
 
-export function remove(identifier) {
+export function removeEntry(identifier) {
 	// TODO: Complete
 }
 
-export function edit(identifier) {
+export function editEntry(identifier) {
 	// TODO: Complete
+}
+
+export async function momentSectorRead(momentInstance) {
+	return readSector({ year: momentInstance.year(), month: momentInstance.month() });
 }

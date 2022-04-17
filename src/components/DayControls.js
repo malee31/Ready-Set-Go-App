@@ -38,7 +38,6 @@ const controlStyles = StyleSheet.create({
 
 export default function DayControls() {
 	const {thisMoment, setMoment} = useCurrentDate();
-	console.log(thisMoment.toString());
 	const offsetMoment = offset => setMoment(thisMoment.add({ days: offset}));
 
 	return (

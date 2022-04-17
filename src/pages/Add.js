@@ -1,9 +1,11 @@
-import React, { useState } from "react";
-import { FlatList, ScrollView, StyleSheet, View, Text, TextInput } from "react-native";
-import { Button, Card, Paragraph, Title, Modal, Portal} from "react-native-paper";
+import React, { useEffect, useState } from "react";
+import { FlatList, StyleSheet, Text } from "react-native";
+import { Button, Card, Modal, Paragraph, Portal, Title } from "react-native-paper";
 import Screen from "../components/Screen";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import DayControls from "../components/DayControls";
+import { addEntry, makeIdentifier, momentSectorRead } from "../utils/storage";
+import { useCurrentDate } from "../components/CurrentDateContext";
+import moment from "moment";
 
 const addStyles = StyleSheet.create({
 	weekLabels: {
@@ -29,83 +31,39 @@ const addStyles = StyleSheet.create({
 });
 
 export default function Add({ navigation }) {
-	const [tasks, setTasks] = useState([
-		{
-			task: "Get Dressed",
-			startTime: "10:00 AM",
-			endTime: "11:00 AM"
-		},
-		{
-			task: "Get Dressed",
-			startTime: "10:00 AM",
-			endTime: "11:00 AM"
-		},
-		{
-			task: "Get Dressed",
-			startTime: "10:00 AM",
-			endTime: "11:00 AM"
-		},
-		{
-			task: "Get Dressed",
-			startTime: "10:00 AM",
-			endTime: "11:00 AM"
-		},
-		{
-			task: "Get Dressed",
-			startTime: "10:00 AM",
-			endTime: "11:00 AM"
-		},
-		{
-			task: "Get Dressed",
-			startTime: "10:00 AM",
-			endTime: "11:00 AM"
-		},
-		{
-			task: "Get Dressed",
-			startTime: "10:00 AM",
-			endTime: "11:00 AM"
-		},
-		{
-			task: "Get Dressed",
-			startTime: "10:00 AM",
-			endTime: "11:00 AM"
-		},
-		{
-			task: "Get Dressed",
-			startTime: "10:00 AM",
-			endTime: "11:00 AM"
-		},
-		{
-			task: "Get Dressed",
-			startTime: "10:00 AM",
-			endTime: "11:00 AM"
-		},
-		{
-			task: "Get Dressed",
-			startTime: "10:00 AM",
-			endTime: "11:00 AM"
-		},
-		{
-			task: "Get Dressed",
-			startTime: "10:00 AM",
-			endTime: "11:00 AM"
-		},
-		{
-			task: "Get Dressed",
-			startTime: "10:00 AM",
-			endTime: "11:00 AM"
-		},
-		{
-			task: "Get Dressed",
-			startTime: "10:00 AM",
-			endTime: "11:00 AM"
-		}
+	const [tasks, setTasks] = useState([]);
+	const { thisMoment } = useCurrentDate();
+	useEffect(() => {
 
-	]);
+		// Force add 20 entries for testing
+		let promise = Promise.resolve();
+		// Array(20).fill(0).map(() => {
+		// 	promise = promise.then(() => {
+		// 		return addEntry({
+		// 			task: "Get Good",
+		// 			start: {
+		// 				year: thisMoment.year(),
+		// 				month: thisMoment.month(),
+		// 				day: thisMoment.date(),
+		// 				hour: 10
+		// 			},
+		// 			end: {
+		// 				year: thisMoment.year(),
+		// 				month: thisMoment.month(),
+		// 				day: thisMoment.date(),
+		// 				hour: 11
+		// 			}
+		// 		});
+		// 	});
+		// });
 
-
-	// 0-6 means sun-sat
-	const [daySelect, setDaySelect] = useState(0);
+		promise.then(() => {
+			momentSectorRead(thisMoment).then(sector => {
+				setTasks(sector.data);
+			});
+		});
+		// Force add end
+	}, []);
 
 	// Popup
 	const [visible, setVisible] = React.useState(true);
@@ -115,28 +73,27 @@ export default function Add({ navigation }) {
 	return (
 		<Screen>
 			<DayControls/>
-				<FlatList 
-					style={addStyles.listContainer}
-					data={tasks}
-					keyExtractor={(data, index) => index}
-					renderItem={({ item }) => (
-						<Card style={addStyles.card} onPress={showModal}>
-							<Card.Content>
-								<Title>{item.task}</Title>
-								<Paragraph>{item.startTime} - {item.endTime}</Paragraph>
-							</Card.Content>
-						</Card>
-					)}
-				/>
+			<FlatList
+				style={addStyles.listContainer}
+				data={tasks}
+				keyExtractor={(data, index) => index}
+				renderItem={({ item }) => (
+					<Card style={addStyles.card} onPress={showModal}>
+						<Card.Content>
+							<Title>{item.task}</Title>
+							<Paragraph>{moment(item.start).format("hh:mm A")} - {moment(item.end).format("hh:mm A")}</Paragraph>
+						</Card.Content>
+					</Card>
+				)}
+			/>
 
-			
 			<Portal>
-				<Modal visible={visible} onDismiss={hideModal} 
+				<Modal visible={visible} onDismiss={hideModal}
 					contentContainerStyle={{
-						backgroundColor: 'white', 
-						padding: 30, 
+						backgroundColor: 'white',
+						padding: 30,
 						height: "90%",
-				}}>
+					}}>
 					<Button icon={"window-close"} onPress={hideModal} contentStyle={{}}></Button>
 					<Text>Add New Task</Text>
 					<Text></Text>

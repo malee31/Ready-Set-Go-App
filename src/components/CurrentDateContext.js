@@ -28,13 +28,6 @@ export default function CurrentDateProvider({children}) {
 
 export function useCurrentDate() {
 	const contextVal = useContext(currentDateContext);
-	console.log("Assembling:")
-	console.log(moment({
-		"year": 2022,
-		"month": 3,
-		"day": 1
-	}).toString())
-	console.log(contextVal.data)
 	return {
 		setMoment: contextVal.set,
 		thisMoment: moment(contextVal.data)
