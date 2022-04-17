@@ -12,6 +12,13 @@ export default function Timer() {
 			textAlign: "center",
 			fontSize: vmin(13)
 		},
+		timer: {
+			display: "flex",
+			flexDirection: "column",
+			justifyContent: "center",
+			alignItems: "center",
+			flexGrow: 1
+		},
 		time: {
 			textAlign: "center",
 			fontSize: vmin(23)
@@ -49,7 +56,7 @@ export default function Timer() {
 	return (
 		<Screen>
 			<Button>previous</Button>
-			<View>
+			<View style={timerStyles.timer}>
 				<Text
 					style={timerStyles.curTask}
 				>
@@ -67,7 +74,6 @@ export default function Timer() {
 				>
 					ETA: {ETA}
 				</Text>
-
 				<Button
 					className={"finishedBtn"}
 					mode="contained"
