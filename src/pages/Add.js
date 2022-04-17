@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet, Text } from "react-native";
+import { FlatList, StyleSheet, Text, View, TextInput } from "react-native";
 import { Button, Card, Modal, Paragraph, Portal, Title } from "react-native-paper";
 import Screen from "../components/Screen";
 import DayControls from "../components/DayControls";
-import { addEntry, makeIdentifier, momentSectorRead } from "../utils/storage";
+import { momentSectorRead } from "../utils/storage";
 import { useCurrentDate } from "../components/CurrentDateContext";
 import moment from "moment";
 
@@ -30,11 +30,14 @@ const addStyles = StyleSheet.create({
 	}
 });
 
+const inputStyle = {
+	fontSize: 20
+}
+
 export default function Add({ navigation }) {
 	const [tasks, setTasks] = useState([]);
 	const { thisMoment } = useCurrentDate();
 	useEffect(() => {
-
 		// Force add 20 entries for testing
 		let promise = Promise.resolve();
 		// Array(20).fill(0).map(() => {
@@ -70,6 +73,12 @@ export default function Add({ navigation }) {
 	const showModal = () => setVisible(true);
 	const hideModal = () => setVisible(false);
 
+	const [currentTask, setCurrentTask] = useState({
+		task: "",
+		startTime: "",
+		endTime: ""
+	});
+
 	return (
 		<Screen>
 			<DayControls/>
@@ -78,7 +87,7 @@ export default function Add({ navigation }) {
 				data={tasks}
 				keyExtractor={(data, index) => index}
 				renderItem={({ item }) => (
-					<Card style={addStyles.card} onPress={showModal}>
+					<Card style={addStyles.card}>
 						<Card.Content>
 							<Title>{item.task}</Title>
 							<Paragraph>{moment(item.start).format("hh:mm A")} - {moment(item.end).format("hh:mm A")}</Paragraph>
@@ -86,17 +95,50 @@ export default function Add({ navigation }) {
 					</Card>
 				)}
 			/>
+			<Button icon={"plus"} onPress={showModal}>Add New Task</Button>
 
 			<Portal>
 				<Modal visible={visible} onDismiss={hideModal}
 					contentContainerStyle={{
 						backgroundColor: 'white',
 						padding: 30,
-						height: "90%",
+						height: "90%"
+					}}
+				>
+					<View style={{
+						display: "flex",
+						flexDirection: "row",
+						justifyContent: "flex-end"
 					}}>
-					<Button icon={"window-close"} onPress={hideModal} contentStyle={{}}></Button>
-					<Text>Add New Task</Text>
-					<Text></Text>
+						<Button
+							icon={"window-close"}
+							onPress={hideModal}
+
+						></Button>
+					</View>
+					<Text style={{ fontSize: 30, marginTop: 20 }}>Add New Task</Text>
+					<Text style={{ fontSize: 20, marginTop: 20 }}>Task</Text>
+					<TextInput
+						style={inputStyle}
+						onChangeText={setCurrentTask}
+						value={currentTask.task}
+						placeholder="Enter Task"
+					/>
+					<Text style={{ fontSize: 20, marginTop: 20 }}>Start Time</Text>
+					<TextInput
+						style={inputStyle}
+						onChangeText={setCurrentTask}
+						value={currentTask.startTime}
+						placeholder="Enter Start Time"
+					/>
+					<Text style={{ fontSize: 20, marginTop: 20 }}>End Time</Text>
+					<TextInput
+						style={inputStyle}
+						onChangeText={setCurrentTask}
+						value={currentTask.endTime}
+						placeholder="Enter End Time"
+					/>
+					<Button onPress={() => setTasks([...tasks, currentTask])}>Submit</Button>
 				</Modal>
 			</Portal>
 

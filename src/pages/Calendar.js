@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { FlatList, ScrollView, StyleSheet, View } from "react-native";
-import { Button, Text } from "react-native-paper";
+import { Text } from "react-native-paper";
 import { colors } from "../../constants.json";
 import Screen from "../components/Screen";
 import DayControls from "../components/DayControls";
-import moment from "moment";
+import { useCurrentDate } from "../components/CurrentDateContext";
 
 const calendarStyles = StyleSheet.create({
 	screenOverrides: {
@@ -26,16 +26,17 @@ const calendarStyles = StyleSheet.create({
 });
 
 function CalendarList() {
+	const { thisMoment } = useCurrentDate();
+	const [entries, setEntries] = useState([]);
+
 	return (
 		<ScrollView style={calendarStyles.listContainer}>
 			<FlatList
-				data={[0, 0, 0]}
-				keyExtractor={(data, index) => index}
-				renderItem={
-					() => {
-						return <View style={calendarStyles.listItem}><Text>Yes</Text></View>
-					}
-				}
+				data={entries}
+				keyExtractor={entry => entry.id}
+				renderItem={() => {
+					return <View style={calendarStyles.listItem}><Text>Yes</Text></View>
+				}}
 			/>
 		</ScrollView>
 	);
@@ -44,7 +45,7 @@ function CalendarList() {
 export default function Calendar() {
 	return (
 		<Screen style={calendarStyles.screenOverrides}>
-			<DayControls />
+			<DayControls/>
 			<CalendarList/>
 		</Screen>
 	);
