@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, TextInput, View } from "react-native";
-import { Button, Card, Modal, Paragraph, Portal, Title } from "react-native-paper";
+import { Button, Modal, Portal } from "react-native-paper";
 import Screen from "../components/Screen";
 import DayControls from "../components/DayControls";
 import { addEntry, momentSectorRead } from "../utils/storage";
@@ -112,9 +112,7 @@ export default function Add({ navigation }) {
 				style={addStyles.listContainer}
 				data={tasks}
 				keyExtractor={(data, index) => index}
-				renderItem={({ item }) => (
-					<TaskCard entry={item}/>
-				)}
+				renderItem={({ item }) => <TaskCard entry={item}/>}
 			/>
 			<Button icon={"plus"} onPress={showModal}>Add New Task</Button>
 
