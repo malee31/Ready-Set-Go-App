@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { Button, Text } from "react-native-paper";
+import { Text, TouchableRipple } from "react-native-paper";
 import formatTime from "../utils/formatTime.js"
 import Screen from "../components/Screen";
 import { colors } from "../../constants.json";
@@ -13,6 +13,32 @@ const hourAndMinToSec = (hour, min) => {
 }
 
 const timerStyles = StyleSheet.create({
+	buttonSeparator: {
+		width: "100%",
+		height: "10%",
+		display: "flex",
+		flexDirection: "column",
+		justifyContent: "center",
+		alignItems: "center",
+		borderBottomColor: colors.primary,
+		borderBottomWidth: 1
+	},
+	buttonRipple: {
+		width: "100%",
+		height: "100%",
+		display: "flex",
+		flexDirection: "column",
+		justifyContent: "center",
+		alignItems: "center",
+		flexGrow: 1
+	},
+	buttonBorderTop: {
+		borderTopWidth: 1,
+		borderColor: colors.primary
+	},
+	buttonText: {
+		color: colors.primary
+	},
 	timer: {
 		display: "flex",
 		flexDirection: "column",
@@ -90,13 +116,19 @@ export default function Timer() {
 
 	return (
 		<Screen>
-			<Button onPress={() => {
-				if(currentTaskIndex > 0) {
-					setCurrentTaskIndex(currentTaskIndex - 1);
-				}
-			}}>
-				Previous
-			</Button>
+			<View style={timerStyles.buttonSeparator}>
+				<TouchableRipple
+					style={timerStyles.buttonRipple}
+					rippleColor={colors.light}
+					onPress={() => {
+						if(currentTaskIndex > 0) {
+							setCurrentTaskIndex(currentTaskIndex - 1);
+						}
+					}}
+				>
+					<Text style={timerStyles.buttonText}>PREVIOUS</Text>
+				</TouchableRipple>
+			</View>
 			<View style={timerStyles.timer}>
 				<Text
 					style={conditionalTimerStyles.curTask}
@@ -115,26 +147,20 @@ export default function Timer() {
 				>
 					ETA: {ETA}
 				</Text>
-				<Button
-					className={"finishedBtn"}
-					mode="contained"
+			</View>
+			<View style={timerStyles.buttonSeparator}>
+				<TouchableRipple
+					style={StyleSheet.flatten([timerStyles.buttonRipple, timerStyles.buttonBorderTop])}
+					rippleColor={colors.light}
 					onPress={() => {
 						if(currentTaskIndex + 1 < entries.length) {
 							setCurrentTaskIndex(currentTaskIndex + 1);
 						}
-
 					}}
-					style={timerStyles.finished}
-					contentStyle={timerStyles.finishedContent}
 				>
-					Finished
-				</Button>
+					<Text style={timerStyles.buttonText}>FINISH</Text>
+				</TouchableRipple>
 			</View>
-			<Button onPress={() => {
-				if(currentTaskIndex + 1 < entries.length) {
-					setCurrentTaskIndex(currentTaskIndex + 1);
-				}
-			}}>Next</Button>
 		</Screen>
 	);
 };

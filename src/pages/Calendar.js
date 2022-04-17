@@ -7,10 +7,6 @@ import TaskCard from "../components/TaskCard";
 import { useDayTasks } from "../components/DayTasksContext";
 
 const calendarStyles = StyleSheet.create({
-	screenOverrides: {
-		paddingVertical: 0,
-		paddingHorizontal: 0
-	},
 	listContainer: {
 		width: "100%",
 		paddingHorizontal: "2%",
@@ -40,7 +36,7 @@ function CalendarList() {
 
 export default function Calendar() {
 	return (
-		<Screen style={calendarStyles.screenOverrides}>
+		<Screen>
 			<DayControls/>
 			<CalendarList/>
 		</Screen>

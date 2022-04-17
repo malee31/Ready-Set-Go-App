@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "ready-set-go-app",
+    "name": "Ready Set GO!",
     "slug": "ready-set-go-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -8,7 +8,7 @@
     "splash": {
       "image": "./assets/icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#FFFFFF"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

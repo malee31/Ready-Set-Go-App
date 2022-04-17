@@ -12,10 +12,6 @@ import AddTaskEntry from "../components/AddTaskEntry";
 import { useDayTasks } from "../components/DayTasksContext";
 
 const addStyles = StyleSheet.create({
-	screenOverrides: {
-		paddingVertical: 0,
-		paddingHorizontal: 0
-	},
 	weekLabels: {
 		display: "flex",
 		flexDirection: "row",
@@ -51,7 +47,7 @@ export default function Add() {
 	});
 
 	// Popup
-	const [visible, setVisible] = React.useState(true);
+	const [visible, setVisible] = useState(false);
 	const showModal = () => setVisible(true);
 	const hideModal = () => setVisible(false);
 
@@ -76,7 +72,7 @@ export default function Add() {
 	}
 
 	return (
-		<Screen style={addStyles.screenOverrides}>
+		<Screen>
 			<DayControls/>
 			<FlatList
 				style={addStyles.listContainer}
