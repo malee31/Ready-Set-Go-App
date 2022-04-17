@@ -6,6 +6,7 @@ import DayControls from "../components/DayControls";
 import { useCurrentDate } from "../components/CurrentDateContext";
 import { momentSectorRead } from "../utils/storage";
 import TaskCard from "../components/TaskCard";
+import { useDayTasks } from "../components/DayTasksContext";
 
 const calendarStyles = StyleSheet.create({
 	screenOverrides: {
@@ -30,19 +31,7 @@ const calendarStyles = StyleSheet.create({
 });
 
 function CalendarList() {
-	const { thisMoment } = useCurrentDate();
-	const [entries, setEntries] = useState([]);
-	const [loaded, setLoaded] = useState(false);
-
-	useEffect(() => {
-		if(loaded) {
-			setLoaded(false);
-		}
-		momentSectorRead(thisMoment, true).then(newEntries => {
-			setEntries(newEntries);
-			setLoaded(true);
-		});
-	}, [thisMoment.format("L")]);
+	const {entries} = useDayTasks();
 
 	return (
 		<ScrollView contentContainerStyle={calendarStyles.listContainer}>

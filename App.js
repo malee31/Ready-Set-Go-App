@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import AppLoading from "expo-app-loading";
 import { basicInfo } from "./src/utils/storage";
 import CurrentDateProvider from "./src/components/CurrentDateContext";
+import DayTasksProvider from "./src/components/DayTasksContext";
 
 const theme = {
 	...DefaultTheme, dark: false, roundness: 2, colors: {
@@ -20,10 +21,7 @@ const theme = {
 export default function App() {
 	const [ready, setReady] = useState(false);
 	useEffect(() => {
-		basicInfo()
-			.then(() => {
-				setReady(true);
-			});
+		basicInfo().then(() => setReady(true));
 	}, []);
 
 	if(!ready) return (<AppLoading/>);
@@ -31,8 +29,10 @@ export default function App() {
 	return (
 		<PaperProvider theme={theme}>
 			<CurrentDateProvider>
-				<StatusBar style="auto"/>
-				<TabNavigator/>
+				<DayTasksProvider>
+					<StatusBar style="auto"/>
+					<TabNavigator/>
+				</DayTasksProvider>
 			</CurrentDateProvider>
 		</PaperProvider>
 	);
