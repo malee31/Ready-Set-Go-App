@@ -1,8 +1,9 @@
 import { StyleSheet, View } from "react-native";
 import { Card, Paragraph, Title } from "react-native-paper";
 import moment from "moment";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { colors } from "../../constants.json";
+import { clear } from "react-native/Libraries/LogBox/Data/LogBoxData";
 
 const taskCardStyles = StyleSheet.create({
 	overlayContainer: {
@@ -28,7 +29,20 @@ const taskCardStyles = StyleSheet.create({
 	}
 });
 
-export default function TaskCard({ entry, percent = 0 }) {
+export default function TaskCard({ entry }) {
+	const diffSeconds = moment.duration(moment(entry.end).diff(moment(entry.start))).asSeconds();
+	const calculatePercent = () => {
+		const diffNowSeconds = moment.duration(moment(entry.end).diff(moment())).asSeconds();
+		return diffNowSeconds < 0 ? 100 : diffNowSeconds <= diffSeconds ? (diffSeconds - diffNowSeconds) / diffSeconds * 100 : 0
+	};
+	const [percent, setPercent] = useState(calculatePercent());
+
+	useEffect(() => {
+		// Updates every 0.1%
+		const interval = setInterval(() => setPercent(calculatePercent()), diffSeconds);
+		return () => clearInterval(interval);
+	}, []);
+
 	return (
 		<View style={taskCardStyles.overlayContainer}>
 			<View style={taskCardStyles.subunderlay}/>
