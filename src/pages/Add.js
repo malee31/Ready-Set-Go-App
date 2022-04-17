@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { FlatList, ScrollView, StyleSheet, View } from "react-native";
-import { Button, Card, Paragraph, Title } from "react-native-paper";
+import { FlatList, ScrollView, StyleSheet, View, Text, TextInput } from "react-native";
+import { Button, Card, Paragraph, Title, Modal, Portal} from "react-native-paper";
 import Screen from "../components/Screen";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const addStyles = StyleSheet.create({
 	weekLabels: {
@@ -105,6 +106,11 @@ export default function Add({ navigation }) {
 	// 0-6 means sun-sat
 	const [daySelect, setDaySelect] = useState(0);
 
+	// Popup
+	const [visible, setVisible] = React.useState(true);
+	const showModal = () => setVisible(true);
+	const hideModal = () => setVisible(false);
+
 	return (
 		<Screen>
 			<View style={{ display: "flex", flexDirection: "row", alignContent: "space-between", marginTop: "4%" }}>
@@ -121,7 +127,7 @@ export default function Add({ navigation }) {
 					data={tasks}
 					keyExtractor={(data, index) => index}
 					renderItem={({ item }) => (
-						<Card style={addStyles.card}>
+						<Card style={addStyles.card} onPress={showModal}>
 							<Card.Content>
 								<Title>{item.task}</Title>
 								<Paragraph>{item.startTime} - {item.endTime}</Paragraph>
@@ -129,6 +135,21 @@ export default function Add({ navigation }) {
 						</Card>
 					)}
 				/>
+
+			
+			<Portal>
+				<Modal visible={visible} onDismiss={hideModal} 
+					contentContainerStyle={{
+						backgroundColor: 'white', 
+						padding: 30, 
+						height: "90%",
+				}}>
+					<Button icon={"window-close"} onPress={hideModal} contentStyle={{maxWidth: "5%"}}></Button>
+					<Text>Add New Task</Text>
+					<Text></Text>
+				</Modal>
+			</Portal>
+
 		</Screen>
 	);
 };
