@@ -8,10 +8,12 @@ const addStyles = StyleSheet.create({
 		display: "flex",
 		flexDirection: "row",
 		alignContent: "space-between",
+		flexWrap: "nowrap",
 		marginVertical: "4%",
 		width: "100%"
 	},
 	weekButtons: {
+		width: "14%",
 		flexShrink: 1,
 		flexGrow: 1
 	},
@@ -114,8 +116,8 @@ export default function Add({ navigation }) {
 				<Button style={addStyles.weekButtons} mode={daySelect == 5 ? "contained" : "text"} onPress={() => { setDaySelect(5)}}>Fri</Button>
 				<Button style={addStyles.weekButtons} mode={daySelect == 6 ? "contained" : "text"} onPress={() => { setDaySelect(6)}}>Sat</Button>
 			</View>
-			<ScrollView style={addStyles.listContainer}>
-				<FlatList
+				<FlatList 
+					style={addStyles.listContainer}
 					data={tasks}
 					keyExtractor={(data, index) => index}
 					renderItem={({ item }) => (
@@ -127,7 +129,6 @@ export default function Add({ navigation }) {
 						</Card>
 					)}
 				/>
-			</ScrollView>
 		</Screen>
 	);
 };

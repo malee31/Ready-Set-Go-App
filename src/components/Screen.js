@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, SafeAreaView } from "react-native";
 
 const { screenStyles } = StyleSheet.create({
 	screenStyles: {
@@ -17,8 +17,10 @@ const { screenStyles } = StyleSheet.create({
 
 export default function Screen({ style, children }) {
 	return (
-		<View style={StyleSheet.compose(screenStyles, style)}>
-			{children}
-		</View>
+		<SafeAreaView>
+			<View style={StyleSheet.compose(screenStyles, style)}>
+				{children}
+			</View>
+		</SafeAreaView>
 	);
 };
