@@ -6,3 +6,13 @@ export default function formatTime(secs) {
     }
     return moment.utc(moment.unix(secs).diff(moment.unix(0))).format("HH:mm:ss");
 }
+
+export function toMomentStart(momentInstance) {
+    return {
+        year: momentInstance.year(),
+        month: momentInstance.month(),
+        day: momentInstance.date(),
+        hour: momentInstance.hour(),
+        minute: momentInstance.minute()
+    };
+}

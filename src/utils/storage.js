@@ -145,6 +145,8 @@ export function editEntry(identifier) {
 	// TODO: Complete
 }
 
-export async function momentSectorRead(momentInstance) {
-	return readSector({ year: momentInstance.year(), month: momentInstance.month() });
+export async function momentSectorRead(momentInstance, onlySpecificDay) {
+	const sector = await readSector({ year: momentInstance.year(), month: momentInstance.month() });
+	if(!onlySpecificDay) return sector;
+	return sector.data.filter(entry => entry.start.day === momentInstance.date())
 }

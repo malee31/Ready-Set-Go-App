@@ -4,7 +4,7 @@ import { colors } from "../../constants.json";
 import Screen from "../components/Screen";
 import DayControls from "../components/DayControls";
 import { useCurrentDate } from "../components/CurrentDateContext";
-import { readSector } from "../utils/storage";
+import { momentSectorRead } from "../utils/storage";
 import TaskCard from "../components/TaskCard";
 
 const calendarStyles = StyleSheet.create({
@@ -35,9 +35,7 @@ function CalendarList() {
 
 	useEffect(() => {
 		setEntries([]);
-		readSector({ year: thisMoment.year(), month: thisMoment.month() })
-			.then(sector => sector.data.filter(entry => entry.start.day === thisMoment.date()))
-			.then(setEntries);
+		momentSectorRead(thisMoment, true).then(setEntries);
 	}, [thisMoment.format("L")]);
 
 	return (

@@ -5,7 +5,7 @@ import formatTime from "../utils/formatTime.js"
 import Screen from "../components/Screen";
 import { colors } from "../../constants.json";
 import { vmin } from "../utils/viewport";
-import { readSector } from "../utils/storage";
+import { momentSectorRead } from "../utils/storage";
 import { useCurrentDate } from "../components/CurrentDateContext";
 
 export default function Timer() {
@@ -18,19 +18,12 @@ export default function Timer() {
 	const [ETA, setETA] = useState(0);
 	const absoluteTime = Math.abs(timeLeft);
 	const negative = timeLeft < 0;
-	let timeString = formatTime(absoluteTime);
-	if(negative) {
-		timeString = `-${timeString}`;
-	}
+	const timeString = `${negative ? "-" : ""}${formatTime(absoluteTime)}`;
 
 	useEffect(() => {
-		setEntries([]);
 		setCurrentTaskIndex(0);
-		readSector({ year: thisMoment.year(), month: thisMoment.month() })
-			.then(sector => sector.data.filter(entry => {
-				return entry.start.day === thisMoment.date();
-			}))
-			.then(setEntries);
+		setEntries([]);
+		momentSectorRead(thisMoment, true).then(setEntries);
 	}, [thisMoment.format("L")]);
 
 	const timerStyles = StyleSheet.create({
@@ -49,6 +42,9 @@ export default function Timer() {
 			textAlign: "center",
 			fontSize: vmin(23),
 			color: (negative ? "red" : "black"),
+			borderColor: negative ? "red" : "transparent",
+			borderTopWidth: 3,
+			borderBottomWidth: 3,
 		},
 		eta: {
 			textAlign: "center",

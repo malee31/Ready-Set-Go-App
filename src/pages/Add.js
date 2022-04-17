@@ -6,9 +6,14 @@ import DayControls from "../components/DayControls";
 import { addEntry, momentSectorRead } from "../utils/storage";
 import { useCurrentDate } from "../components/CurrentDateContext";
 import moment from "moment";
+import { toMomentStart } from "../utils/formatTime";
 import TaskCard from "../components/TaskCard";
 
 const addStyles = StyleSheet.create({
+	screenOverrides: {
+		paddingVertical: 0,
+		paddingHorizontal: 0
+	},
 	weekLabels: {
 		display: "flex",
 		flexDirection: "row",
@@ -23,26 +28,17 @@ const addStyles = StyleSheet.create({
 		flexGrow: 1
 	},
 	listContainer: {
+		paddingHorizontal: "2%",
+		paddingVertical: 5,
 		flexShrink: 1,
 		flexGrow: 1
+	},
+	inputStyle: {
+		fontSize: 20
 	}
 });
 
-const inputStyle = {
-	fontSize: 20
-}
-
-function toMomentStart(momentInstance) {
-	return {
-		year: momentInstance.year(),
-		month: momentInstance.month(),
-		day: momentInstance.date(),
-		hour: momentInstance.hour(),
-		minute: momentInstance.minute()
-	};
-}
-
-export default function Add({ navigation }) {
+export default function Add() {
 	const { thisMoment } = useCurrentDate();
 	const [tasks, setTasks] = useState([]);
 	const [currentTask, setCurrentTask] = useState({
@@ -50,12 +46,10 @@ export default function Add({ navigation }) {
 		startTime: "",
 		endTime: ""
 	});
+
 	// TODO: Better rerun condition
 	useEffect(() => {
-		momentSectorRead(thisMoment)
-			.then(sector => {
-				setTasks(sector.data);
-			});
+		momentSectorRead(thisMoment, true).then(setTasks);
 	}, [currentTask.task === 0, thisMoment.format("L")]);
 
 	// Popup
@@ -71,6 +65,7 @@ export default function Add({ navigation }) {
 			start: toMomentStart(startMoment),
 			end: toMomentStart(endMoment)
 		};
+
 		return addEntry(newEntry).then(() => {
 			setCurrentTask({
 				task: "",
@@ -81,7 +76,7 @@ export default function Add({ navigation }) {
 	}
 
 	return (
-		<Screen>
+		<Screen style={addStyles.screenOverrides}>
 			<DayControls/>
 			<FlatList
 				style={addStyles.listContainer}
@@ -111,21 +106,21 @@ export default function Add({ navigation }) {
 					<Text style={{ fontSize: 30, marginTop: 20 }}>Add New Task</Text>
 					<Text style={{ fontSize: 20, marginTop: 20 }}>Task</Text>
 					<TextInput
-						style={inputStyle}
+						style={addStyles.inputStyle}
 						onChangeText={e => setCurrentTask({ ...currentTask, task: e })}
 						value={currentTask.task}
 						placeholder="Enter Task"
 					/>
 					<Text style={{ fontSize: 20, marginTop: 20 }}>Start Time</Text>
 					<TextInput
-						style={inputStyle}
+						style={addStyles.inputStyle}
 						onChangeText={e => setCurrentTask({ ...currentTask, startTime: e })}
 						value={currentTask.startTime}
 						placeholder="Enter Start Time"
 					/>
 					<Text style={{ fontSize: 20, marginTop: 20 }}>End Time</Text>
 					<TextInput
-						style={inputStyle}
+						style={addStyles.inputStyle}
 						onChangeText={e => setCurrentTask({ ...currentTask, endTime: e })}
 						value={currentTask.endTime}
 						placeholder="Enter End Time"

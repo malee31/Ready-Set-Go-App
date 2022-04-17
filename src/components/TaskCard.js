@@ -15,7 +15,7 @@ export default function TaskCard({ entry }) {
 		<Card style={cardStyle}>
 			<Card.Content>
 				<Title>{entry.task}</Title>
-				<Paragraph>{moment(entry.start).format("hh:mm A")} - {moment(entry.end).format("hh:mm A")}</Paragraph>
+				<Paragraph>{moment(entry.start).format("L hh:mm A")} - {moment(entry.end).format("hh:mm A")}</Paragraph>
 			</Card.Content>
 		</Card>
 	)
