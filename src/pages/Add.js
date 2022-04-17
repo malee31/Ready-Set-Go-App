@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { FlatList, ScrollView, StyleSheet, View, Text, TextInput } from "react-native";
 import { Button, Card, Paragraph, Title, Modal, Portal} from "react-native-paper";
 import Screen from "../components/Screen";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import DayControls from "../components/DayControls";
 
 const addStyles = StyleSheet.create({
@@ -27,6 +26,10 @@ const addStyles = StyleSheet.create({
 		marginBottom: 10,
 	}
 });
+
+const inputStyle = {
+	fontSize: 20
+}
 
 export default function Add({ navigation }) {
 	const [tasks, setTasks] = useState([
@@ -55,51 +58,7 @@ export default function Add({ navigation }) {
 			startTime: "10:00 AM",
 			endTime: "11:00 AM"
 		},
-		{
-			task: "Get Dressed",
-			startTime: "10:00 AM",
-			endTime: "11:00 AM"
-		},
-		{
-			task: "Get Dressed",
-			startTime: "10:00 AM",
-			endTime: "11:00 AM"
-		},
-		{
-			task: "Get Dressed",
-			startTime: "10:00 AM",
-			endTime: "11:00 AM"
-		},
-		{
-			task: "Get Dressed",
-			startTime: "10:00 AM",
-			endTime: "11:00 AM"
-		},
-		{
-			task: "Get Dressed",
-			startTime: "10:00 AM",
-			endTime: "11:00 AM"
-		},
-		{
-			task: "Get Dressed",
-			startTime: "10:00 AM",
-			endTime: "11:00 AM"
-		},
-		{
-			task: "Get Dressed",
-			startTime: "10:00 AM",
-			endTime: "11:00 AM"
-		},
-		{
-			task: "Get Dressed",
-			startTime: "10:00 AM",
-			endTime: "11:00 AM"
-		},
-		{
-			task: "Get Dressed",
-			startTime: "10:00 AM",
-			endTime: "11:00 AM"
-		}
+		
 
 	]);
 
@@ -112,6 +71,12 @@ export default function Add({ navigation }) {
 	const showModal = () => setVisible(true);
 	const hideModal = () => setVisible(false);
 
+	const [currentTask, setCurrentTask] = useState({
+		task: "",
+		startTime: "",
+		endTime: ""
+	});
+
 	return (
 		<Screen>
 			<DayControls/>
@@ -120,26 +85,58 @@ export default function Add({ navigation }) {
 					data={tasks}
 					keyExtractor={(data, index) => index}
 					renderItem={({ item }) => (
-						<Card style={addStyles.card} onPress={showModal}>
+						<Card style={addStyles.card}>
 							<Card.Content>
 								<Title>{item.task}</Title>
 								<Paragraph>{item.startTime} - {item.endTime}</Paragraph>
 							</Card.Content>
 						</Card>
 					)}
-				/>
-
+				/><Button icon={"plus"} onPress={showModal} >Add New Task</Button>
+				
 			
 			<Portal>
 				<Modal visible={visible} onDismiss={hideModal} 
 					contentContainerStyle={{
 						backgroundColor: 'white', 
 						padding: 30, 
-						height: "90%",
-				}}>
-					<Button icon={"window-close"} onPress={hideModal} contentStyle={{}}></Button>
-					<Text>Add New Task</Text>
-					<Text></Text>
+						height: "90%"
+					}}
+				>
+					<View style={{
+								display: "flex",
+								flexDirection: "row",
+								justifyContent: "flex-end"
+							}}>
+						<Button 
+							icon={"window-close"} 
+							onPress={hideModal}
+							
+						></Button>
+					</View>
+					<Text style={{fontSize: 30, marginTop: 20}}>Add New Task</Text>
+					<Text style={{fontSize: 20, marginTop: 20}}>Task</Text>
+					<TextInput 
+						style={inputStyle}
+						onChangeText={setCurrentTask}
+						value={currentTask.task}
+						placeholder="Enter Task"
+					/>
+					<Text style={{fontSize: 20, marginTop: 20}}>Start Time</Text>
+					<TextInput  
+						style={inputStyle}
+						onChangeText={setCurrentTask}
+						value={currentTask.startTime}
+						placeholder="Enter Start Time"
+					/>
+					<Text style={{fontSize: 20, marginTop: 20}}>End Time</Text>
+					<TextInput  
+						style={inputStyle}
+						onChangeText={setCurrentTask}
+						value={currentTask.endTime}
+						placeholder="Enter End Time"
+					/>
+					<Button onPress={setTasks(...tasks, currentTask)}>Submit</Button>
 				</Modal>
 			</Portal>
 
