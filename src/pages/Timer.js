@@ -28,7 +28,6 @@ export default function Timer() {
 		setCurrentTaskIndex(0);
 		readSector({ year: thisMoment.year(), month: thisMoment.month() })
 			.then(sector => sector.data.filter(entry => {
-				console.log(entry)
 				return entry.start.day === thisMoment.date();
 			}))
 			.then(setEntries);

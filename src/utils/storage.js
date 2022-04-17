@@ -119,7 +119,6 @@ export async function addEntry(newEntry) {
 			diff = a.start.minute - b.start.minute;
 		}
 		if(diff === 0) {
-			console.log("HOUR COMP")
 			diff = a.end.hour - b.end.hour;
 		}
 		if(diff === 0) {

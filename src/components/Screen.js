@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet, View, SafeAreaView } from "react-native";
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StyleSheet } from "react-native";
 
 const { screenStyles } = StyleSheet.create({
 	screenStyles: {
