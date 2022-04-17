@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, TextInput, View } from "react-native";
-import { Button, Modal, Portal } from "react-native-paper";
+import { Button, Modal, Portal, Switch } from "react-native-paper";
 import Screen from "../components/Screen";
 import DayControls from "../components/DayControls";
 import { addEntry, momentSectorRead } from "../utils/storage";
@@ -48,7 +48,8 @@ export default function Add({ navigation }) {
 	const [currentTask, setCurrentTask] = useState({
 		task: "",
 		startTime: "",
-		endTime: ""
+		endTime: "",
+		isGetReady: false
 	});
 	// TODO: Better rerun condition
 	useEffect(() => {
@@ -129,6 +130,14 @@ export default function Add({ navigation }) {
 						onChangeText={e => setCurrentTask({ ...currentTask, endTime: e })}
 						value={currentTask.endTime}
 						placeholder="Enter End Time"
+					/>
+					<Text style={{ fontSize: 20, marginTop: 20 }}>Is Part of Getting Ready?</Text>
+					<Switch 
+						style={{ marginTop: 5 }}
+						value={currentTask.isGetReady} 
+						onValueChange={ () => {
+							setCurrentTask({ ...currentTask, isGetReady: !currentTask.isGetReady })
+						}} 
 					/>
 					<Button onPress={() => {
 						save().then(hideModal).catch(console.error);
