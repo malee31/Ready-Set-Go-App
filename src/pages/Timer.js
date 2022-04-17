@@ -81,7 +81,11 @@ export default function Timer() {
 			setETA(0);
 			return;
 		}
-		setETA(formatTime(hourAndMinToSec(entries[currentTaskIndex].end.hour, entries[currentTaskIndex].end.minute)));
+
+		let startTime = hourAndMinToSec(entries[currentTaskIndex].start.hour, entries[currentTaskIndex].start.minute);
+		let endTime = hourAndMinToSec(entries[currentTaskIndex].end.hour, entries[currentTaskIndex].end.minute);
+		setTimeLeft(endTime - startTime)
+		setETA(formatTime(endTime));
 	}, [entries[currentTaskIndex]?.id]);
 
 	return (
@@ -118,7 +122,7 @@ export default function Timer() {
 						if(currentTaskIndex + 1 < entries.length) {
 							setCurrentTaskIndex(currentTaskIndex + 1);
 						}
-
+						
 					}}
 					style={timerStyles.finished}
 					contentStyle={timerStyles.finishedContent}
